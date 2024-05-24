@@ -2,11 +2,11 @@
 
 ## Available Scripts
 
-In the project directory, you can run:
+you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Run the app in the development mode.
 
 ### `npm run dev`
 
