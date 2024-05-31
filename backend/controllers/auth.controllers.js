@@ -41,13 +41,14 @@ const signup = asyncMiddleware(async (req, res) => {
 
   if (newUser) {
     await newUser.save();
-    generateTokenAndSetCookie(res, newUser._id);
+    let token = generateTokenAndSetCookie(res, newUser._id, newUser.role);
     res.status(201).json({
       _id: newUser?._id,
       username: newUser?.username,
       email: newUser?.email,
       gender: newUser?.gender,
       profilePic: newUser?.profilePic,
+      role: newUser?.role,
     });
   } else {
     res.status(400);
@@ -61,7 +62,7 @@ const login = asyncMiddleware(async (req, res) => {
   const user = await User.findOne({ username });
 
   if (user && (await user.matchPassword(password || ""))) {
-    generateTokenAndSetCookie(res, user._id);
+    let token = generateTokenAndSetCookie(res, user._id, user.role);
 
     res.status(200).json({
       _id: user?._id,
@@ -69,11 +70,18 @@ const login = asyncMiddleware(async (req, res) => {
       email: user?.email,
       gender: user?.gender,
       profilePic: user?.profilePic,
+      role: user?.role,
     });
   } else {
-    res.status(404);
+    res.status(401);
     throw new Error("Invalid credentials");
   }
+});
+
+const getLoggedUser = asyncMiddleware(async (req, res) => {
+  const loggedUserID = req.user._id;
+  const user = await User.findOne(loggedUserID).select("-password");
+  res.status(200).json(user);
 });
 
 const logout = asyncMiddleware(async (req, res) => {
@@ -81,4 +89,4 @@ const logout = asyncMiddleware(async (req, res) => {
   res.status(200).json({ message: "logout successfully" });
 });
 
-export { signup, login, logout };
+export { signup, login, logout, getLoggedUser };

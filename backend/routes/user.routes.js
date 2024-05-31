@@ -6,6 +6,7 @@ import adminAuthMiddleware from "../middlewares/adminAuthMiddleware.js";
 const Router = express.Router();
 
 Router.route("/").get(authMiddleware, getUsers);
+Router.route("/:id").get(authMiddleware, getUsers);
 Router.route("/admin").get(authMiddleware,adminAuthMiddleware,getUsersadmin);
 
 export default Router;

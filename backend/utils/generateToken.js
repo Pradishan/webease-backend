@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
-const generateTokenAndSetCookie = (res, userId) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,//expires in 15 days
+const generateTokenAndSetCookie = (res, userId, role) => {
+  const token = jwt.sign({ userId, role }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE, //expires in 15 days
   });
 
   const options = {
@@ -11,10 +11,11 @@ const generateTokenAndSetCookie = (res, userId) => {
     ),
     httpOnly: true, //prevents client side js from reading the cookie
     sameSite: "strict", //prevent csrf attacks by not allowing other domains to access the cookie
-    secure: process.env.NODE_ENV !== 'development', // Only send cookies over HTTPS when not in development
+    secure: process.env.NODE_ENV !== "development", // Only send cookies over HTTPS when not in development
   };
-  
+
   res.cookie("jwt", token, options);
+  return token;
 };
 
 export default generateTokenAndSetCookie;

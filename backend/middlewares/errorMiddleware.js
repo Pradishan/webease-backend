@@ -4,14 +4,10 @@ const errorMiddleware = (err, req, res, next) => {
     // Set the status code to the error status code
     res.status(statusCode);
     // Return the error message
-    if (err.name === 'CastError' && err.kind === 'ObjectId') {
-        res.status(404).json({message: 'Product not found'});
-    } else {
         res.send({
-            message: err.message,
+            error: err.message,
             stack: process.env.NODE_ENV === 'production' ? null : err.stack,
         });
-    }
 }
  
 export default errorMiddleware;

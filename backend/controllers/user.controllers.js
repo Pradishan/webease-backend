@@ -8,6 +8,7 @@ const getUsers = asyncMiddleware(async (req, res) => {
     );
     res.status(200).json(users);
 });
+
 const getUsersadmin = asyncMiddleware(async (req, res) => {
     const loggedUserID = req.user._id;
     const users = await User.find({ _id: { $ne: loggedUserID } }).select(

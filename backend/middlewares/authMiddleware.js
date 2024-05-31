@@ -14,6 +14,7 @@ const authMiddleware = asyncMiddleware(async (req, res, next) => {
 
   if (!decoded) {
     res.status(401);
+    res.clearCookie("jwt");
     throw new Error("unauthorized - Invalid Token provided");
   }
 
