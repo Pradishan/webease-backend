@@ -79,3 +79,20 @@ Sample Request Body
 #### Get All User
 
 ### `http://localhost:5000/api/users/`
+
+### Message APIs
+
+#### Send Message to a user
+
+### `http://localhost:5000/api/message/send/:id`
+
+Sample Request Body
+
+```
+{
+   "message":"hi.."
+}
+```
+#### Get Messages to a user
+
+### `http://localhost:5000/api/message/:id`
