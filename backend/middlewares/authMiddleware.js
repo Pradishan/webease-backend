@@ -22,6 +22,7 @@ const authMiddleware = asyncMiddleware(async (req, res, next) => {
 
   if (!user) {      
     res.status(404);
+    res.clearCookie("jwt");
     throw new Error("User not found");
   }
 

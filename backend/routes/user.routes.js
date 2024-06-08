@@ -1,12 +1,20 @@
 import express from "express";
-import { getUsers, getUsersadmin } from "../controllers/user.controllers.js";
+import {
+  deleteUser,
+  getAllUsers,
+  getUser,
+  getUsers,
+  updateUser,
+} from "../controllers/user.controllers.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import adminAuthMiddleware from "../middlewares/adminAuthMiddleware.js";
 
 const Router = express.Router();
 
-Router.route("/").get(authMiddleware, getUsers);
-Router.route("/:id").get(authMiddleware, getUsers);
-Router.route("/admin").get(authMiddleware,adminAuthMiddleware,getUsersadmin);
+Router.use(authMiddleware);
+
+Router.route("/").get(getUsers);
+Router.route("/all").get(adminAuthMiddleware, getAllUsers);
+Router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 export default Router;

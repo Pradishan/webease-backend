@@ -72,6 +72,10 @@ Sample Request Body
 
 ### `http://localhost:5000/api/auth/logout`
 
+#### Get Logged user
+
+### `http://localhost:5000/api/auth/loggedUser`
+
 #### Get All User
 
 ### `http://localhost:5000/api/users/`

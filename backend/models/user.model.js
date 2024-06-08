@@ -7,16 +7,33 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      validate: {
+        validator: function (v) {
+          // Regular expression for validating email addresses
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email!`,
+      },
     },
     password: {
       type: String,
       required: true,
-      minlength: 6,
+      validate: {
+        validator: function (v) {
+          // Regular expression for validating passwords
+          return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+            v
+          );
+        },
+        message: (props) =>
+          "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      },
     },
     gender: {
       type: String,
@@ -29,6 +46,20 @@ const userSchema = mongoose.Schema(
       enum: ["user", "admin"],
     },
     profilePic: {
+      type: String,
+      default: "",
+    },
+    phone: {
+      type: String,
+      default: "",
+      validate: {
+        validator: function (v) {
+          return /^\+?[1-9]\d{1,14}$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid phone number!`,
+      },
+    },
+    address: {
       type: String,
       default: "",
     },

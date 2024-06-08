@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 const signup = asyncMiddleware(async (req, res) => {
-  const { username, email, password, gender, confirmPassword, role } = req.body;
+  const { username, email, password, gender, confirmPassword, role, phone, address } = req.body;
 
   if (password !== confirmPassword) {
     res.status(400);
@@ -33,6 +33,8 @@ const signup = asyncMiddleware(async (req, res) => {
     password,
     gender,
     profilePic: gender === "male" ? bodyProfilePic : girlProfilePic,
+    phone,
+    address,
   });
 
   if (role) {
@@ -49,6 +51,8 @@ const signup = asyncMiddleware(async (req, res) => {
       gender: newUser?.gender,
       profilePic: newUser?.profilePic,
       role: newUser?.role,
+      phone: newUser?.phone,
+      address: newUser?.address,
     });
   } else {
     res.status(400);
@@ -71,6 +75,8 @@ const login = asyncMiddleware(async (req, res) => {
       gender: user?.gender,
       profilePic: user?.profilePic,
       role: user?.role,
+      phone: user?.phone,
+      address: user?.address,
     });
   } else {
     res.status(401);
