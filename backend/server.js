@@ -5,12 +5,14 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongoDB.js";
 import authRouter from "./routes/auth.routes.js"
 import userRouter from "./routes/user.routes.js"
+import messageRouter from "./routes/message.routes.js"
 import notFound from "./middlewares/notFoundMiddleware.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
+import { app, server } from "./socket/socket.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;
-const app = express();
+// const app = express();
 
 app.use(cors({
     origin: process.env.FRONTEND_API_URL, // specify the exact origin
@@ -26,11 +28,12 @@ app.get('/', (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/message", messageRouter);
 
 app.use(notFound);
 app.use(errorMiddleware);
 
-app.listen(port, () => {
+server.listen(port, () => {
     connectDB();
     console.log(`Server started at http://localhost:${port}`);
 });
