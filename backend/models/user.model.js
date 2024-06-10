@@ -44,6 +44,7 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "user",
       enum: ["user", "admin"],
+      required: true,
     },
     profilePic: {
       type: String,
@@ -51,7 +52,6 @@ const userSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      default: "",
       validate: {
         validator: function (v) {
           return /^\+?[1-9]\d{1,14}$/.test(v);
@@ -61,7 +61,7 @@ const userSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      default: "",
+      required: true,
     },
   },
   {
