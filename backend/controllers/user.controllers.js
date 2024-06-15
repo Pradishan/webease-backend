@@ -1,4 +1,3 @@
-import adminAuthMiddleware from "../middlewares/adminAuthMiddleware.js";
 import asyncMiddleware from "../middlewares/asyncMiddleware.js";
 import User from "../models/user.model.js";
 
