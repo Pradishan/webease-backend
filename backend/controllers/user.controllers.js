@@ -11,11 +11,12 @@ const getUsers = asyncMiddleware(async (req, res) => {
 });
 
 const getAllUsers = asyncMiddleware(async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 25;
-  const skip = (page - 1) * limit;
+  // const page = parseInt(req.query.page) || 1;
+  // const limit = parseInt(req.query.limit) || 25;
+  // const skip = (page - 1) * limit;
 
-  const users = await User.find({}).select("-password").skip(skip).limit(limit);
+  // const users = await User.find({}).select("-password").skip(skip).limit(limit);
+  const users = await User.find({}).select("-password");
 
   const totalUsers = await User.countDocuments();
 
@@ -28,7 +29,7 @@ const getAllUsers = asyncMiddleware(async (req, res) => {
   }
   res.status(200).json({
     users,
-    totalPages: Math.ceil(totalUsers / limit),
+    // totalPages: Math.ceil(totalUsers / limit),
   });
 });
 
