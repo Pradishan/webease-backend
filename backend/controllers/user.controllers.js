@@ -50,9 +50,7 @@ const updateUser = asyncMiddleware(async (req, res) => {
     user.email = req.body.email || user.email;
     user.gender = req.body.gender || user.gender;
     user.profilePic = req.body.profilePic || user.profilePic;
-    user.role = req.body.role
-      ? adminAuthMiddleware(req, res, () => req.body.role)
-      : user.role;
+    user.role = req.body.role || user.role;
     user.phone = req.body.phone || user.phone;
     user.address = req.body.address || user.address;
 
