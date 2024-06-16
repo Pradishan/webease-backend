@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  changePassword,
   deleteUser,
   getAllUsers,
   getUser,
@@ -14,6 +15,7 @@ const Router = express.Router();
 Router.use(authMiddleware);
 
 Router.route("/").get(getUsers);
+Router.route("/changePassword").post(changePassword);
 Router.route("/all").get(adminAuthMiddleware, getAllUsers);
 Router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 

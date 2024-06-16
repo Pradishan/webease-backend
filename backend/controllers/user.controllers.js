@@ -76,6 +76,32 @@ const updateUser = asyncMiddleware(async (req, res) => {
   }
 });
 
+const changePassword = asyncMiddleware(async (req, res) => {
+  const _id = req.user._id;
+
+  const { oldPassword, newPassword, ConfirmPassword } = req.body;
+
+  const user = await User.findById(_id);
+
+  if (user && (await user.matchPassword(oldPassword || ""))) {
+    if (newPassword) {
+      if (newPassword === ConfirmPassword) {
+        user.password = newPassword;
+        await user.save();
+        res.status(200).json({ message: "Password changed successfully" });
+      } else {
+        res.status(400);
+        throw new Error("new password and confirm password do not match");
+      }
+    }else {
+      throw new Error("Invalid Inputs");
+    }
+  } else {
+    res.status(401);
+    throw new Error("Invalid Old Password");
+  }
+});
+
 const deleteUser = asyncMiddleware(async (req, res) => {
   let _id = req.params.id;
   const user = await User.findById(_id);
@@ -88,4 +114,11 @@ const deleteUser = asyncMiddleware(async (req, res) => {
   }
 });
 
-export { getUsers, getAllUsers, getUser, updateUser, deleteUser };
+export {
+  getUsers,
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  changePassword,
+};
