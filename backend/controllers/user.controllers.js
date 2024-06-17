@@ -69,6 +69,7 @@ const updateUser = asyncMiddleware(async (req, res) => {
       role: updatedUser?.role,
       phone: updatedUser?.phone,
       address: updatedUser?.address,
+      verified: updatedUser?.verified,
     });
   } else {
     res.status(404);

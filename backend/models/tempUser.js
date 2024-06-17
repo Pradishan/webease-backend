@@ -1,18 +1,16 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = mongoose.Schema(
+const tempUserSchema = mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true,
       validate: {
         validator: function (v) {
           // Regular expression for validating email addresses
@@ -52,37 +50,50 @@ const userSchema = mongoose.Schema(
     address: {
       type: String,
       required: true,
-    }
+    },
+    otp: {
+      type: String,
+      required: true,
+    },
+    expireAt: {
+      type: Date,
+      default: Date.now,
+      index: { expires: "30m" },
+    },
   },
   {
     timestamps: true,
   }
 );
 
-userSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    // Validate password before hashing
-    const passwordValidation =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-        this.password
-      );
-    if (!passwordValidation) {
-      next(
-        new Error(
-          "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."
-        )
-      );
-    }
+tempUserSchema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
-  next();
-});
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
+    if (this.isModified("otp")) {
+        this.otp = await bcrypt.hash(this.otp, salt);
+    }
 
-const User = mongoose.model("User", userSchema);
+    if (this.isModified("password")) {
+      // Validate password before hashing
+      const passwordValidation =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          this.password
+        );
+      if (!passwordValidation) {
+        next(
+          new Error(
+            "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."
+          )
+        );
+      }
+    }
+    next();
+  });
+  
+  tempUserSchema.methods.matchOtp = async function (enteredOtp) {
+    return await bcrypt.compare(enteredOtp, this.otp);
+  };
 
-export default User;
+const TempUser = mongoose.model("TempUser", tempUserSchema);
+
+export default TempUser;
