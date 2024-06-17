@@ -197,8 +197,6 @@ const resetPasswordByOtp = asyncMiddleware(async (req, res) => {
     userId: userID,
   });
 
-  console.log(userOTPVerification);
-
   if (userOTPVerification && (await userOTPVerification.matchOtp(otp || ""))) {
     if (newPassword) {
       if (newPassword === confirmPassword) {
