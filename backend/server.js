@@ -6,6 +6,7 @@ import connectDB from "./config/mongoDB.js";
 import authRouter from "./routes/auth.routes.js"
 import userRouter from "./routes/user.routes.js"
 import messageRouter from "./routes/message.routes.js"
+import paymentRouter from "./routes/payment.routes.js"
 import notFound from "./middlewares/notFoundMiddleware.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 import { app, server } from "./socket/socket.js";
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/message", messageRouter);
+app.use("/api/payment", paymentRouter);
 
 app.use(notFound);
 app.use(errorMiddleware);
