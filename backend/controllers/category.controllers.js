@@ -85,6 +85,13 @@ const createSubCategory = asyncMiddleware(async (req, res) => {
   let categoryID = req.params.categoryID;
   const { name, description } = req.body;
 
+  const category = await Category.findById(categoryID);
+
+  if (!category) {
+    res.status(404);
+    throw new Error("Category not found");
+  }
+
   const subCategory = await SubCategory.findOne({ name, categoryID });
 
   if (subCategory) {

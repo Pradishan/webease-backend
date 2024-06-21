@@ -124,6 +124,18 @@ const createRevision = asyncMiddleware(async (req, res) => {
   const clientID = req.user._id;
   const { description, images, files, status } = req.body;
 
+  if (!orderID) {
+    res.status(400);
+    throw new Error("Order ID is required");
+  }
+
+  const order = await Order.findById({ _id: orderID });
+
+  if (!order) {
+    res.status(400);
+    throw new Error("oreder not found");
+  }
+
   const newRevision = new Revision({
     clientID,
     orderID,
