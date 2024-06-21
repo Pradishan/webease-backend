@@ -28,16 +28,13 @@ Router.route("/sub/:id")
 
 Router.route("/sub").get(getAllSubCategory);
 
-
-
 Router.route("/:id")
   .get(getCategory)
   .put(adminAuthMiddleware, updateCategory)
   .delete(adminAuthMiddleware, deleteCategory);
 
-
   Router.route("/:categoryID/sub")
   .get(getAllSubCategoryByCategory)
   .post(adminAuthMiddleware, createSubCategory);
-  
+
 export default Router;

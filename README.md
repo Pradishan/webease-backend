@@ -1,4 +1,4 @@
-# webease-backend
+# <center> webease-backend </center>
 
 ## Available Scripts
 
@@ -6,11 +6,11 @@ you can run:
 
 ### `npm start`
 
-Run the app in the development mode.
+> Run the app in the development mode.
 
 ### `npm run dev`
 
-Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
+> Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
 
 ## Available Roles
 
@@ -22,198 +22,369 @@ Open [http://localhost:5000](http://localhost:5000) to view it in your browser.
 
 ### Auth APIs
 
+---
+
 #### Register a new user
 
-### `http://localhost:5000/api/auth/signup`
+`http://localhost:5000/api/auth/signup`
 
-method = POST
+    Method = POST
 
 Sample Request Body
 
-```
+```json
 {
-    "username" :"pradishan",
-    "email" :"pradishan@gmail.com",
-    "password" :"XXXXXX",
-    "gender" :"male",
-    "confirmPassword" :"XXXXXX"
+  "username": "pradishan",
+  "email": "pradishan@user.com",
+  "password": "XXXXXX",
+  "gender": "male", // male or female
+  "confirmPassword": "XXXXXX",
+  "phone": "+941231393",
+  "address": "Nuwara Eliya,Srilanka."
 }
 ```
 
 #### Register a new Admin
 
-### `http://localhost:5000/api/auth/signup`
+`http://localhost:5000/api/auth/signup`
 
-method = POST
+    Method = POST
 
 Sample Request Body
 
-```
+```json
 {
     "username" :"pradishan",
-    "email" :"pradishan@gmail.com",
+    "email" :"pradishan@admin.com",
     "password" :"XXXXXX",
-    "gender" :"male",
+    "gender" :"male", // male or female
     "confirmPassword" :"XXXXXX"
-    "role":"admin"
+    "role":"admin", // admin
+    "phone":"+941231393",
+    "address":"Nuwara Eliya,Srilanka."
 }
 ```
 
 #### Login
 
-### `http://localhost:5000/api/auth/login`
+`http://localhost:5000/api/auth/login`
 
-method = POST
+    Method = POST
 
 Sample Request Body
 
-```
+```json
 {
-    "username" :"pradishan",
-    "password" :"XXXXXX"
+  "username": "pradishan",
+  "password": "XXXXXX"
 }
 ```
 
 #### Logout
 
-### `http://localhost:5000/api/auth/logout`
+`http://localhost:5000/api/auth/logout`
 
-method = POST
+    Method = POST
 
 #### Get Logged user
 
-### `http://localhost:5000/api/auth/loggedUser`
+`http://localhost:5000/api/auth/loggedUser`
 
-method = GET
+    Method = GET
 
 #### Get All User
 
-### `http://localhost:5000/api/users/`
+`http://localhost:5000/api/users/`
 
-method = GET
+    Method = GET
 
 ### Message APIs
 
+---
+
 #### Send Message to a user
 
-### `http://localhost:5000/api/message/send/:id`
+`http://localhost:5000/api/message/send/:id`
 
-method = POST
+    Method = POST
 
 Sample Request Body
 
-```
+```json
 {
-   "message":"hi.."
+  "message": "hi.."
 }
 ```
 
 #### Get Messages to a user
 
-### `http://localhost:5000/api/message/:id`
+`http://localhost:5000/api/message/:id`
 
-method = GET
+    Method = GET
 
 ### Category APIs
 
+---
+
 #### get all Categories
 
-### `http://localhost:5000/api/category/`
+`http://localhost:5000/api/category/`
 
-method = GET
+    Method = GET
 
 #### get Category by id
 
-### `http://localhost:5000/api/category/:id`
+`http://localhost:5000/api/category/:id`
 
-method = GET
+    Method = GET
 
 #### create Category
 
-### `http://localhost:5000/api/category/`
+`http://localhost:5000/api/category/`
 
-method = POST
+    Method = POST
 
 Sample Request Body
 
-```
+```json
 {
-    "name": "web design",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
+  "name": "web design",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
 }
 ```
+
 #### update Category
 
-### `http://localhost:5000/api/category/:id`
+`http://localhost:5000/api/category/:id`
 
-method = PUT
+    Method = PUT
 
 Sample Request Body
 
-```
+```json
 {
-    "name": "web design",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
+  "name": "web design",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
 }
 ```
+
 #### delete Category
 
-### `http://localhost:5000/api/category/:id`
+`http://localhost:5000/api/category/:id`
 
-method = DELETE
+    Method = DELETE
 
 ### subCategory APIs
 
+---
+
 #### get all subCategories
 
-### `http://localhost:5000/api/category/sub`
+`http://localhost:5000/api/category/sub`
 
-method = GET
+    Method = GET
 
 #### get all subCategories by categoryID
 
-### `http://localhost:5000/api/category/:categoryID/sub`
+`http://localhost:5000/api/category/:categoryID/sub`
 
-method = GET
+    Method = GET
 
 #### get subCategory by id
 
-### `http://localhost:5000/api/category/sub/:id`
+`http://localhost:5000/api/category/sub/:id`
 
-method = GET
+    Method = GET
 
 #### create Category
 
-### `http://localhost:5000/api/category/:categoryID/sub`
+`http://localhost:5000/api/category/:categoryID/sub`
 
-method = POST
+    Method = POST
 
 Sample Request Body
 
-```
+```json
 {
-    "name": "web design",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
+  "name": "web design",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
 }
 ```
+
 #### update Category
 
-### `http://localhost:5000/api/category/sub/:id`
+`http://localhost:5000/api/category/sub/:id`
 
-method = PUT
+    Method = PUT
 
 Sample Request Body
 
-```
+```json
 {
-    "name": "web design",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
+  "name": "web design",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when  "
 }
 ```
+
 #### delete Category
 
-### `http://localhost:5000/api/category/sub/:id`
+`http://localhost:5000/api/category/sub/:id`
 
-method = DELETE
+    Method = DELETE
 
+### Order APIs
 
+---
+
+#### create order
+
+`http://localhost:5000/api/order/`
+
+    Method = POST
+
+Sample Request Body
+
+```json
+{
+  "categoryID": "asdsd123",
+  "subCategoryID": "adad1232",
+  "name": "pradishan",
+  "purpose": "logo for web",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ",
+  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took",
+  "colorTheme": "black",
+  "images": [
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/"
+  ],
+  "files": ""
+}
+```
+#### get all orders
+
+`http://localhost:5000/api/order/`
+
+    Method = GET
+
+#### get all orders by clientID
+
+`http://localhost:5000/api/order/client/:clientID`
+
+    Method = GET
+
+#### get order
+
+`http://localhost:5000/api/order/:orderID`
+
+    Method = GET
+
+#### update order
+
+`http://localhost:5000/api/order/:orderID`
+
+    Method = PUT
+
+Sample Request Body
+
+```json
+{
+  "categoryID": "asdsd123",
+  "subCategoryID": "adad1232",
+  "name": "pradishan",
+  "purpose": "logo for web",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ",
+  "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took",
+  "colorTheme": "black",
+  "images": [
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/"
+  ],
+  "files": "",
+  "status": "InProgress" //["InProgress", "UnderRevision","Completed","Cancelled","Delivered","Rejected","Pending","OnHold","Shipped","OutForDelivery","Returned","Refunded"]
+}
+```
+
+#### delete order
+
+`http://localhost:5000/api/order/:orderID`
+
+    Method = DELETE
+
+### Revision APIs
+
+---
+
+#### create revision
+
+`http://localhost:5000/api/order/:orderID/revision`
+
+    Method = POST
+
+Sample Request Body
+
+```json
+{
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ",
+  "images": [
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/"
+  ],
+  "files": [
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/"
+  ]
+}
+```
+#### get all revision
+
+`http://localhost:5000/api/order/revision`
+
+    Method = GET
+#### get all revision by orderID
+
+`http://localhost:5000/api/order/:orderID/revision`
+
+    Method = GET
+#### get all revision by clientID
+
+`http://localhost:5000/api/order/revision/:clientID`
+
+    Method = GET
+
+#### get revision
+
+`http://localhost:5000/api/order/:orderID/revision/:revisionID`
+
+    Method = GET
+
+#### update revision
+
+`http://localhost:5000/api/order/:orderID/revision/:revisionID`
+
+    Method = PUT
+
+Sample Request Body
+
+```json
+{
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ",
+    "images": [
+        "http://localhost:5000/api/order/",
+        "http://localhost:5000/api/order/",
+        "http://localhost:5000/api/order/"
+    ],
+    "files": [
+        "http://localhost:5000/api/order/",
+        "http://localhost:5000/api/order/"
+    ],
+    "status": "Accepted" //["Accepted","Pending","Rejected"],
+}
+```
+#### delete revision
+
+`http://localhost:5000/api/order/:orderID/revision/:revisionID`
+
+    Method = DELETE
