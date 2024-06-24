@@ -15,7 +15,12 @@ const createFeedBack = asyncMiddleware(async (req, res) => {
   if (newFeedBack) {
     await newFeedBack.save();
 
-    res.status(201).json(newFeedBack);
+    const populatedFeedBack = await newFeedBack.populate({
+      path: "clientID",
+      select: "username profilePic",
+    });
+
+    res.status(201).json(populatedFeedBack);
   } else {
     res.status(400);
     throw new Error("FeedBack not created");
@@ -24,7 +29,10 @@ const createFeedBack = asyncMiddleware(async (req, res) => {
 
 const getFeedBack = asyncMiddleware(async (req, res) => {
   let _id = req.params.id;
-  const feedBack = await FeedBack.findById(_id);
+  const feedBack = await FeedBack.findById(_id).populate({
+    path: "clientID",
+    select: ["username", "profilePic"],
+  });
   if (!feedBack) {
     res.status(404);
     throw new Error("FeedBack not found");
@@ -33,7 +41,10 @@ const getFeedBack = asyncMiddleware(async (req, res) => {
 });
 
 const getAllFeedBack = asyncMiddleware(async (req, res) => {
-  const feedBack = await FeedBack.find({});
+  const feedBack = await FeedBack.find({}).populate({
+    path: "clientID",
+    select: ["username", "profilePic"],
+  });
 
   if (feedBack.length === 0) {
     res.status(404);
@@ -47,7 +58,10 @@ const getAllFeedBack = asyncMiddleware(async (req, res) => {
 
 const getAllFeedBackByClientId = asyncMiddleware(async (req, res) => {
   const clientID = req.params.clientID;
-  const feedBack = await FeedBack.find({ clientID });
+  const feedBack = await FeedBack.find({ clientID }).populate({
+    path: "clientID",
+    select: ["username", "profilePic"],
+  });
 
   if (feedBack.length === 0) {
     res.status(404);
@@ -62,7 +76,10 @@ const getAllFeedBackByClientId = asyncMiddleware(async (req, res) => {
 const updateFeedBack = asyncMiddleware(async (req, res) => {
   let _id = req.params.id;
 
-  const feedBack = await FeedBack.findById(_id);
+  const feedBack = await FeedBack.findById(_id).populate({
+    path: "clientID",
+    select: ["username", "profilePic"],
+  });
 
   if (feedBack) {
     feedBack.name = req.body.name || feedBack.name;
