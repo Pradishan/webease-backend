@@ -9,6 +9,7 @@ import messageRouter from "./routes/message.routes.js";
 import paymentRouter from "./routes/payment.routes.js";
 import categoryRouter from "./routes/category.routes.js";
 import orderRouter from "./routes/order.routes.js";
+import feedBackRouter from "./routes/feedBack.routes.js";
 import notFound from "./middlewares/notFoundMiddleware.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 import { app, server } from "./socket/socket.js";
@@ -37,6 +38,7 @@ app.use("/api/message", messageRouter);
 app.use("/api/payment", paymentRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/order", orderRouter);
+app.use("/api/feedBack", feedBackRouter);
 
 app.use(notFound);
 app.use(errorMiddleware);

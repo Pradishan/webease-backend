@@ -261,6 +261,7 @@ Sample Request Body
   "files": ""
 }
 ```
+
 #### get all orders
 
 `http://localhost:5000/api/order/`
@@ -338,16 +339,19 @@ Sample Request Body
   ]
 }
 ```
+
 #### get all revision
 
 `http://localhost:5000/api/order/revision`
 
     Method = GET
+
 #### get all revision by orderID
 
 `http://localhost:5000/api/order/:orderID/revision`
 
     Method = GET
+
 #### get all revision by clientID
 
 `http://localhost:5000/api/order/revision/:clientID`
@@ -370,21 +374,83 @@ Sample Request Body
 
 ```json
 {
-      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ",
-    "images": [
-        "http://localhost:5000/api/order/",
-        "http://localhost:5000/api/order/",
-        "http://localhost:5000/api/order/"
-    ],
-    "files": [
-        "http://localhost:5000/api/order/",
-        "http://localhost:5000/api/order/"
-    ],
-    "status": "Accepted" //["Accepted","Pending","Rejected"],
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ",
+  "images": [
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/"
+  ],
+  "files": [
+    "http://localhost:5000/api/order/",
+    "http://localhost:5000/api/order/"
+  ],
+  "status": "Accepted" //["Accepted","Pending","Rejected"],
 }
 ```
+
 #### delete revision
 
 `http://localhost:5000/api/order/:orderID/revision/:revisionID`
+
+    Method = DELETE
+
+### FeedBack APIs
+
+---
+
+#### create FeedBack
+
+`http://localhost:5000/api/feedBack/`
+
+    Method = POST
+
+Sample Request Body
+
+```json
+{
+  "name": "", //optinal
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum ",
+  "rating": "4" // ["0", "1", "2", "3", "4", "5"]
+}
+```
+
+#### get all FeedBack
+
+`http://localhost:5000/api/feedBack/`
+
+    Method = GET
+
+#### get all FeedBack by clientID
+
+`http://localhost:5000/api/feedBack/client/:clientID`
+
+    Method = GET
+
+#### get FeedBack
+
+`http://localhost:5000/api/feedBack/:id`
+
+    Method = GET
+
+#### update FeedBack
+
+`http://localhost:5000/api/feedBack/:id`
+
+    Method = PUT
+
+Sample Request Body
+
+```json
+{
+  "name": "", // optinal
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum ",
+  "rating": "4", // ["0", "1", "2", "3", "4", "5"]
+  "status": "Show" // ["Show", "Hide", "Pending"]
+}
+```
+
+#### delete FeedBack
+
+`http://localhost:5000/api/feedBack/:id`
 
     Method = DELETE
