@@ -11,15 +11,13 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
-Router.route("/").get(getAllFeedBack).post(createFeedBack);
+Router.route("/").get(getAllFeedBack).post(authMiddleware, createFeedBack);
 
 Router.route("/:id")
   .get(getFeedBack)
-  .put(updateFeedBack)
-  .delete(deleteFeedBack);
+  .put(authMiddleware, updateFeedBack)
+  .delete(authMiddleware, deleteFeedBack);
 
-Router.route("/client/:clientID").get(getAllFeedBackByClientId);
+Router.route("/client/:clientID").get(authMiddleware, getAllFeedBackByClientId);
 
 export default Router;

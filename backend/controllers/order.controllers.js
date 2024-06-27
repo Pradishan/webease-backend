@@ -1,5 +1,6 @@
 import asyncMiddleware from "../middlewares/asyncMiddleware.js";
 import Order from "../models/order.model.js";
+import OrderRequest from "../models/orderRequest.model.js";
 import Revision from "../models/revision.model.js";
 
 const createOrder = asyncMiddleware(async (req, res) => {
@@ -33,8 +34,31 @@ const createOrder = asyncMiddleware(async (req, res) => {
 
   if (newOrder) {
     await newOrder.save();
+    const orderRequest = await createOrderRequest(req, res, newOrder._id);
 
-    res.status(201).json(newOrder);
+    if (!orderRequest) {
+      res.status(400);
+      throw new Error("Order request not created");
+    }
+
+    res.status(201).json({ newOrder: newOrder, orderRequest: orderRequest });
+  } else {
+    res.status(400);
+    throw new Error("Order not created");
+  }
+});
+
+const createOrderRequest = asyncMiddleware(async (req, res, orderID) => {
+  const clientID = req.user._id;
+
+  const newOrderRequest = new OrderRequest({
+    clientID,
+    orderID,
+  });
+
+  if (newOrderRequest) {
+    await newOrderRequest.save();
+    return newOrderRequest;
   } else {
     res.status(400);
     throw new Error("Order not created");
@@ -43,7 +67,15 @@ const createOrder = asyncMiddleware(async (req, res) => {
 
 const getOrder = asyncMiddleware(async (req, res) => {
   let orderID = req.params.orderID;
-  const order = await Order.findById({ _id: orderID });
+  const order = await Order.findById({ _id: orderID })
+    .populate({
+      path: "categoryID",
+      select: "name",
+    })
+    .populate({
+      path: "subCategoryID",
+      select: "name",
+    });
   if (!order) {
     res.status(404);
     throw new Error("Order not found");
@@ -51,8 +83,55 @@ const getOrder = asyncMiddleware(async (req, res) => {
   res.status(200).json(order);
 });
 
+const getOrdreRequest = asyncMiddleware(async (req, res) => {
+  let orderRequestID = req.params.orderRequestID;
+  const orderRequest = await OrderRequest.findById({
+    _id: orderRequestID,
+  }).populate({
+    path: "orderID",
+    select: ["categoryID", "subCategoryID"],
+    populate: [
+      { path: "categoryID", select: "name" },
+      { path: "subCategoryID", select: "name" },
+    ],
+  });
+  if (!orderRequest) {
+    res.status(404);
+    throw new Error("OrderRequests not found");
+  }
+  res.status(200).json(orderRequest);
+});
+
+const getAllOrdreRequests = asyncMiddleware(async (req, res) => {
+  const orderRequests = await OrderRequest.find({}).populate({
+    path: "orderID",
+    select: ["categoryID", "subCategoryID"],
+    populate: [
+      { path: "categoryID", select: "name" },
+      { path: "subCategoryID", select: "name" },
+    ],
+  });
+
+  if (orderRequests.length === 0) {
+    res.status(404);
+    throw new Error("No orderRequest found");
+  }
+  if (!orderRequests) {
+    throw new Error("Error fetching orderRequests");
+  }
+  res.status(200).json(orderRequests);
+});
+
 const getAllOrders = asyncMiddleware(async (req, res) => {
-  const orders = await Order.find({});
+  const orders = await Order.find({})
+    .populate({
+      path: "categoryID",
+      select: "name",
+    })
+    .populate({
+      path: "subCategoryID",
+      select: "name",
+    });
 
   if (orders.length === 0) {
     res.status(404);
@@ -66,7 +145,15 @@ const getAllOrders = asyncMiddleware(async (req, res) => {
 
 const getAllOrdersByClientID = asyncMiddleware(async (req, res) => {
   const clientID = req.params.clientID;
-  const orders = await Order.find({ clientID });
+  const orders = await Order.find({ clientID })
+    .populate({
+      path: "categoryID",
+      select: "name",
+    })
+    .populate({
+      path: "subCategoryID",
+      select: "name",
+    });
 
   if (orders.length === 0) {
     res.status(404);
@@ -116,6 +203,41 @@ const deleteOrder = asyncMiddleware(async (req, res) => {
   } else {
     res.status(404);
     throw new Error("Order not found");
+  }
+});
+
+const updateOrderRequest = asyncMiddleware(async (req, res) => {
+  let orderRequestID = req.params.orderRequestID;
+
+  const orderRequest = await OrderRequest.findById({ _id: orderRequestID });
+
+  if (orderRequest) {
+    orderRequest.totalPrice = req.body.totalPrice || orderRequest.totalPrice;
+    orderRequest.advance = req.body.advance || orderRequest.advance;
+    orderRequest.status = req.body.status || orderRequest.status;
+    orderRequest.statusClient =
+      req.body.statusClient || orderRequest.statusClient;
+
+    const updatedOrderRequest = await orderRequest.save();
+
+    res.json(updatedOrderRequest);
+  } else {
+    res.status(404);
+    throw new Error("orderRequest not found");
+  }
+});
+
+const deleteOrderRequest = asyncMiddleware(async (req, res) => {
+  let orderRequestID = req.params.orderRequestID;
+
+  const orderRequest = await OrderRequest.findById({ _id: orderRequestID });
+
+  if (orderRequest) {
+    await orderRequest.deleteOne();
+    res.json({ message: "orderRequest removed" });
+  } else {
+    res.status(404);
+    throw new Error("orderRequest not found");
   }
 });
 
@@ -260,4 +382,8 @@ export {
   getAllRevisionsByClientId,
   updateRevision,
   deleteRevision,
+  getOrdreRequest,
+  getAllOrdreRequests,
+  updateOrderRequest,
+  deleteOrderRequest,
 };

@@ -10,12 +10,12 @@ const orderSchema = mongoose.Schema(
     categoryID: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: "Category",
     },
     subCategoryID: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: "SubCategory",
     },
     name: {
       type: String,

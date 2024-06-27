@@ -4,15 +4,19 @@ import {
   createOrder,
   createRevision,
   deleteOrder,
+  deleteOrderRequest,
   deleteRevision,
   getAllOrders,
   getAllOrdersByClientID,
+  getAllOrdreRequests,
   getAllRevisions,
   getAllRevisionsByClientId,
   getAllRevisionsByOrderId,
   getOrder,
+  getOrdreRequest,
   getRevision,
   updateOrder,
+  updateOrderRequest,
   updateRevision,
 } from "../controllers/order.controllers.js";
 
@@ -21,6 +25,13 @@ const Router = express.Router();
 Router.use(authMiddleware);
 
 Router.route("/").get(getAllOrders).post(createOrder);
+
+Router.route("/orderRequest").get(getAllOrdreRequests);
+Router.route("/orderRequest/:orderRequestID")
+  .get(getOrdreRequest)
+  .put(updateOrderRequest)
+  .delete(deleteOrderRequest);
+
 Router.route("/client/:clientID").get(getAllOrdersByClientID);
 Router.route("/revision").get(getAllRevisions);
 Router.route("/revision/:clientID").get(getAllRevisionsByClientId);
