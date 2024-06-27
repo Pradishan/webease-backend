@@ -124,9 +124,16 @@ const verification = asyncMiddleware(async (req, res) => {
 });
 
 const login = asyncMiddleware(async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
-  const user = await User.findOne({ username });
+  let user = null;
+
+  if (username) {
+    user = await User.findOne({ username });
+  }
+  if (email) {
+    user = await User.findOne({ email });
+  }
 
   if (user && (await user.matchPassword(password || ""))) {
     let token = generateTokenAndSetCookie(res, user._id, user.role);

@@ -27,7 +27,6 @@ const userSchema = mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
       enum: ["male", "female"],
     },
     role: {
@@ -51,7 +50,6 @@ const userSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
     }
   },
   {

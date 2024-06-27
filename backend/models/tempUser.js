@@ -25,7 +25,6 @@ const tempUserSchema = mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
       enum: ["male", "female"],
     },
     role: {
@@ -49,7 +48,6 @@ const tempUserSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
     },
     otp: {
       type: String,
