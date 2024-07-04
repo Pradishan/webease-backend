@@ -2,24 +2,20 @@ import express from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import {
   createOrder,
-  createRevision,
   deleteOrder,
   deleteOrderRequest,
-  deleteRevision,
   getAllOrders,
   getAllOrdersByClientID,
   getAllOrdreRequests,
-  getAllRevisions,
-  getAllRevisionsByClientId,
-  getAllRevisionsByOrderId,
   getOrder,
   getOrdreRequest,
   getOrdreRequestByClient,
-  getRevision,
   updateOrder,
   updateOrderRequest,
-  updateRevision,
 } from "../controllers/order.controllers.js";
+
+import orderSubmitionRouter from "./orderSubmition.routes.js";
+import revisionRouter from "./revision.routes.js";
 
 const Router = express.Router();
 
@@ -34,18 +30,10 @@ Router.route("/orderRequest/:orderRequestID")
   .put(updateOrderRequest)
   .delete(deleteOrderRequest);
 
+Router.use("/revision", revisionRouter);
+Router.use("/orderSubmition", orderSubmitionRouter);
+
 Router.route("/client/:clientID").get(getAllOrdersByClientID);
-Router.route("/revision").get(getAllRevisions);
-Router.route("/revision/:clientID").get(getAllRevisionsByClientId);
-
-Router.route("/:orderID/revision/:revisionID")
-  .get(getRevision)
-  .put(updateRevision)
-  .delete(deleteRevision);
-
-Router.route("/:orderID/revision")
-  .get(getAllRevisionsByOrderId)
-  .post(createRevision);
 
 Router.route("/:orderID").get(getOrder).put(updateOrder).delete(deleteOrder);
 
