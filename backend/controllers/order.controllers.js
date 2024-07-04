@@ -102,6 +102,24 @@ const getOrdreRequest = asyncMiddleware(async (req, res) => {
   res.status(200).json(orderRequest);
 });
 
+const getOrdreRequestByClient = asyncMiddleware(async (req, res) => {
+  const clientID = req.user._id;
+
+  const orderRequests = await OrderRequest.find({ clientID }).populate({
+    path: "orderID",
+    select: ["categoryID", "subCategoryID"],
+    populate: [
+      { path: "categoryID", select: "name" },
+      { path: "subCategoryID", select: "name" },
+    ],
+  });
+  if (!orderRequests) {
+    res.status(404);
+    throw new Error("OrderRequests not found");
+  }
+  res.status(200).json(orderRequests);
+});
+
 const getAllOrdreRequests = asyncMiddleware(async (req, res) => {
   const orderRequests = await OrderRequest.find({}).populate({
     path: "orderID",
@@ -386,4 +404,5 @@ export {
   getAllOrdreRequests,
   updateOrderRequest,
   deleteOrderRequest,
+  getOrdreRequestByClient,
 };

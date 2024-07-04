@@ -14,6 +14,7 @@ import {
   getAllRevisionsByOrderId,
   getOrder,
   getOrdreRequest,
+  getOrdreRequestByClient,
   getRevision,
   updateOrder,
   updateOrderRequest,
@@ -27,6 +28,7 @@ Router.use(authMiddleware);
 Router.route("/").get(getAllOrders).post(createOrder);
 
 Router.route("/orderRequest").get(getAllOrdreRequests);
+Router.route("/orderRequest/client").get(getOrdreRequestByClient);
 Router.route("/orderRequest/:orderRequestID")
   .get(getOrdreRequest)
   .put(updateOrderRequest)

@@ -14,7 +14,6 @@ const orderSchema = mongoose.Schema(
     },
     subCategoryID: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "SubCategory",
     },
     name: {
