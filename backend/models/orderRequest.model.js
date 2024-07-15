@@ -25,7 +25,21 @@ const orderRequestSchema = mongoose.Schema(
     status: {
       type: String,
       default: "Pending",
-      enum: ["Rejected", "Pending", "accepted"],
+      enum: [
+        "Rejected",
+        "Pending",
+        "accepted",
+        "InProgress",
+        "UnderRevision",
+        "Completed",
+        "Cancelled",
+        "Delivered",
+        "OnHold",
+        "Shipped",
+        "OutForDelivery",
+        "Returned",
+        "Refunded",
+      ],
     },
     statusClient: {
       type: String,
