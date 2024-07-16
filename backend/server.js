@@ -20,7 +20,7 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_API_URL, // specify the exact origin
+    origin: [process.env.FRONTEND_API_URL,process.env.ADMIN_FRONTEND_API_URL ], // specify the exact origin
     credentials: true, // allow credentials
   })
 );

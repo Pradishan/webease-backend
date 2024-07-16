@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server,{
     cors: {
-        origin: process.env.FRONTEND_API_URL || "http://localhost:3000",
+        origin: [process.env.FRONTEND_API_URL,process.env.ADMIN_FRONTEND_API_URL ] || ["http://localhost:3000", "http://localhost:3001"],
         methods: ["GET", "POST"],
         credentials: true,
     },

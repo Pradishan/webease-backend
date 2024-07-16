@@ -56,6 +56,22 @@ const getAllFeedBack = asyncMiddleware(async (req, res) => {
   res.status(200).json(feedBack);
 });
 
+const displayFeedBack = asyncMiddleware(async (req, res) => {
+  const feedBack = await FeedBack.find({ status: "Show" }).populate({
+    path: "clientID",
+    select: ["username", "profilePic"],
+  });
+
+  if (feedBack.length === 0) {
+    res.status(404);
+    throw new Error("No FeedBacks found");
+  }
+  if (!feedBack) {
+    throw new Error("Error fetching FeedBacks");
+  }
+  res.status(200).json(feedBack);
+});
+
 const getAllFeedBackByClientId = asyncMiddleware(async (req, res) => {
   const clientID = req.params.clientID;
   const feedBack = await FeedBack.find({ clientID }).populate({
@@ -117,4 +133,5 @@ export {
   getAllFeedBackByClientId,
   updateFeedBack,
   deleteFeedBack,
+  displayFeedBack,
 };
