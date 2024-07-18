@@ -12,6 +12,8 @@ import orderRouter from "./routes/order.routes.js";
 import feedBackRouter from "./routes/feedBack.routes.js";
 import notFound from "./middlewares/notFoundMiddleware.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
+import colorsRouter from "./routes/colors.routes.js";
+import themeRouter from "./routes/theme.routes.js";
 import { app, server } from "./socket/socket.js";
 
 dotenv.config();
@@ -39,6 +41,8 @@ app.use("/api/payment", paymentRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/feedBack", feedBackRouter);
+app.use("/api/colors", colorsRouter);
+app.use("/api/theme", themeRouter);
 
 app.use(notFound);
 app.use(errorMiddleware);
