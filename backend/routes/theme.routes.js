@@ -11,15 +11,15 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
+// Router.use(authMiddleware);
 
 Router.route("/")
   .get(getAllThemes)
-  .post(adminAuthMiddleware, createTheme);
+  .post(authMiddleware, adminAuthMiddleware, createTheme);
 
 Router.route("/:id")
   .get(getTheme)
-  .put(adminAuthMiddleware, updateTheme)
-  .delete(adminAuthMiddleware, deleteTheme);
+  .put(authMiddleware, adminAuthMiddleware, updateTheme)
+  .delete(authMiddleware, adminAuthMiddleware, deleteTheme);
 
 export default Router;
