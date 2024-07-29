@@ -11,15 +11,13 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
 Router.route("/")
   .get(getAllConfigUI)
-  .post(adminAuthMiddleware, createConfigUI);
+  .post(authMiddleware,adminAuthMiddleware, createConfigUI);
 
 Router.route("/:id")
   .get(getConfigUI)
-  .put(adminAuthMiddleware, updateConfigUI)
-  .delete(adminAuthMiddleware, deleteConfigUI);
+  .put(authMiddleware,adminAuthMiddleware, updateConfigUI)
+  .delete(authMiddleware,adminAuthMiddleware, deleteConfigUI);
 
 export default Router;

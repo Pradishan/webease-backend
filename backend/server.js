@@ -14,7 +14,7 @@ import notFound from "./middlewares/notFoundMiddleware.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 import colorsRouter from "./routes/colors.routes.js";
 import themeRouter from "./routes/theme.routes.js";
-import configUIRouter from "./routes/configUI.router.js";
+import configUIRouter from "./routes/configUI.routes.js";
 import { app, server } from "./socket/socket.js";
 
 dotenv.config();

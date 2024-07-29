@@ -3,7 +3,7 @@ import Category from "../models/category.model.js";
 import SubCategory from "../models/subcategory.model.js";
 
 const createCategory = asyncMiddleware(async (req, res) => {
-  const { name, description } = req.body;
+  const { name, image, description } = req.body;
   const category = await Category.findOne({ name });
 
   if (category) {
@@ -13,6 +13,7 @@ const createCategory = asyncMiddleware(async (req, res) => {
 
   const newCategory = new Category({
     name,
+    image,
     description,
   });
 
@@ -56,6 +57,7 @@ const updateCategory = asyncMiddleware(async (req, res) => {
 
   if (category) {
     category.name = req.body.name || category.name;
+    category.image = req.body.image || category.image;
     category.description = req.body.description || category.description;
 
     const updatedCategory = await category.save();
@@ -83,7 +85,7 @@ const deleteCategory = asyncMiddleware(async (req, res) => {
 
 const createSubCategory = asyncMiddleware(async (req, res) => {
   let categoryID = req.params.categoryID;
-  const { name, description } = req.body;
+  const { name, image, description } = req.body;
 
   const category = await Category.findById(categoryID);
 
@@ -102,6 +104,7 @@ const createSubCategory = asyncMiddleware(async (req, res) => {
   const newSubCategory = new SubCategory({
     categoryID,
     name,
+    image,
     description,
   });
 
@@ -126,7 +129,7 @@ const getSubCategory = asyncMiddleware(async (req, res) => {
 });
 
 const getAllSubCategory = asyncMiddleware(async (req, res) => {
-  const subCategoryies = await SubCategory.find({});
+  const subCategoryies = await SubCategory.find({}).populate("categoryID");
 
   if (subCategoryies.length === 0) {
     res.status(404);
@@ -159,6 +162,7 @@ const updateSubCategory = asyncMiddleware(async (req, res) => {
 
   if (subCategory) {
     subCategory.name = req.body.name || subCategory.name;
+    subCategory.image = req.body.image || subCategory.image;
     subCategory.description = req.body.description || subCategory.description;
 
     const updatedSubCategory = await subCategory.save();
