@@ -232,6 +232,7 @@ const getLoggedUser = asyncMiddleware(async (req, res) => {
 
 const logout = asyncMiddleware(async (req, res) => {
   res.clearCookie("jwt");
+  res.clearCookie("role");
   res.status(200).json({ message: "logout successfully" });
 });
 

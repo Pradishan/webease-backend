@@ -15,6 +15,9 @@ const generateTokenAndSetCookie = (res, userId, role) => {
   };
 
   res.cookie("jwt", token, options);
+  if (role == "admin") {
+    res.cookie("role", role, options);
+  }
   return token;
 };
 

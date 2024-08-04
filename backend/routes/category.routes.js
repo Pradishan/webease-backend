@@ -17,24 +17,24 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
-Router.route("/").get(getAllCategory).post(adminAuthMiddleware, createCategory);
+Router.route("/")
+  .get(getAllCategory)
+  .post(authMiddleware, adminAuthMiddleware, createCategory);
 
 Router.route("/sub/:id")
-  .get(getSubCategory)
-  .put(adminAuthMiddleware, updateSubCategory)
-  .delete(adminAuthMiddleware, deleteSubCategory);
+  .get(authMiddleware, getSubCategory)
+  .put(authMiddleware, adminAuthMiddleware, updateSubCategory)
+  .delete(authMiddleware, adminAuthMiddleware, deleteSubCategory);
 
-Router.route("/sub").get(getAllSubCategory);
+Router.route("/sub").get(authMiddleware, getAllSubCategory);
 
 Router.route("/:id")
-  .get(getCategory)
-  .put(adminAuthMiddleware, updateCategory)
-  .delete(adminAuthMiddleware, deleteCategory);
+  .get(authMiddleware, getCategory)
+  .put(authMiddleware, adminAuthMiddleware, updateCategory)
+  .delete(authMiddleware, adminAuthMiddleware, deleteCategory);
 
-  Router.route("/:categoryID/sub")
+Router.route("/:categoryID/sub")
   .get(getAllSubCategoryByCategory)
-  .post(adminAuthMiddleware, createSubCategory);
+  .post(authMiddleware, adminAuthMiddleware, createSubCategory);
 
 export default Router;
