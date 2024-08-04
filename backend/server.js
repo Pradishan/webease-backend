@@ -15,6 +15,8 @@ import errorMiddleware from "./middlewares/errorMiddleware.js";
 import colorsRouter from "./routes/colors.routes.js";
 import themeRouter from "./routes/theme.routes.js";
 import configUIRouter from "./routes/configUI.routes.js";
+import packgesRouter from "./routes/packges.routes.js";
+import aboutRouter from "./routes/about.routes.js"
 import { app, server } from "./socket/socket.js";
 
 dotenv.config();
@@ -45,6 +47,8 @@ app.use("/api/feedBack", feedBackRouter);
 app.use("/api/colors", colorsRouter);
 app.use("/api/theme", themeRouter);
 app.use("/api/config-ui", configUIRouter);
+app.use("/api/packges", packgesRouter)
+app.use("/api/about", aboutRouter)
 
 app.use(notFound);
 app.use(errorMiddleware);
