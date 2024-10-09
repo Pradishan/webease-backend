@@ -24,13 +24,20 @@ const createTheme = asyncMiddleware(async (req, res) => {
 
 const getTheme = asyncMiddleware(async (req, res) => {
   const _id = req.params.id;
-  const theme = await Theme.findById(_id).populate('colorID');
+  const theme = await Theme.findById(_id)
+    .populate({
+      path: 'colorID',
+      select: '-_id -createdAt -updatedAt -__v'
+    });
+
   if (!theme) {
     res.status(404);
     throw new Error("Theme not found");
   }
+
   res.status(200).json(theme);
 });
+
 
 const getAllThemes = asyncMiddleware(async (req, res) => {
   const themes = await Theme.find({}).populate('colorID');
