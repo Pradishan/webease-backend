@@ -20,7 +20,7 @@ const fontSchema = new mongoose.Schema(
     },
     font5: {
       type: String,
-      default: "Georgia", // Default remains unchanged
+      default: "Inter", // Default remains unchanged
     },
   },
   {
