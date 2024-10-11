@@ -5,27 +5,22 @@ const fontSchema = new mongoose.Schema(
     font1: {
       type: String,
       default: "Poppins", // Updated default font
-      // required: true,
     },
     font2: {
       type: String,
-      default: "Inter", // Updated default font
-      // required: true,
+      default: "Roboto", // Updated default font to Roboto
     },
     font3: {
       type: String,
-      default: "Arial", // Default remains unchanged
-      // required: true,
+      default: "Lato", // Updated default font to Lato
     },
     font4: {
       type: String,
-      default: "Helvetica", // Default remains unchanged
-      // required: true,
+      default: "Montserrat", // Updated default font to Montserrat
     },
     font5: {
       type: String,
-      default: "Georgia", // Updated default font
-      // required: true,
+      default: "Georgia", // Default remains unchanged
     },
   },
   {
