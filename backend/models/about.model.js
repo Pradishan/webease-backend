@@ -1,8 +1,27 @@
 import mongoose from "mongoose";
 
 const aboutSchema = mongoose.Schema(
-    {
-     image:{
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    logo: {
+      type: String,
+      required: true,
+    },
+    banner: {
+      text: {
+        type: String,
+        required: true,
+      },
+      subText: {
+        type: String,
+        required: true,
+      },
+    },
+    about: {
+      image: {
         type: String,
         required: true,
       },
@@ -11,11 +30,24 @@ const aboutSchema = mongoose.Schema(
         required: true,
       },
     },
-    {
-      timestamps: true,
-    }
-  );
-  
-  const About = mongoose.model("About", aboutSchema);
-  
-  export default About;
+    stat: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        value: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const About = mongoose.model("About", aboutSchema);
+
+export default About;
