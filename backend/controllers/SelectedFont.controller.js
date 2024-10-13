@@ -1,10 +1,10 @@
-import asyncHandler from "express-async-handler";
+import asyncMiddleware from "../middlewares/asyncMiddleware.js";
 import SelectedFont from "../models/selectedFont.model.js"; // Adjust the path to your model
 
 // @desc Create or Set the selected font
 // @route POST /api/selected-font
 // @access Private/Admin
-const createSelectedFont = asyncHandler(async (req, res) => {
+const createSelectedFont = asyncMiddleware(async (req, res) => {
   const { selectedFont } = req.body;
 
   // Check if the font already exists
@@ -26,7 +26,7 @@ const createSelectedFont = asyncHandler(async (req, res) => {
 // @desc Get the currently selected font
 // @route GET /api/selected-font
 // @access Public
-const getSelectedFont = asyncHandler(async (req, res) => {
+const getSelectedFont = asyncMiddleware(async (req, res) => {
   const font = await SelectedFont.findOne({});
   if (font) {
     res.status(200).json(font);
@@ -39,7 +39,7 @@ const getSelectedFont = asyncHandler(async (req, res) => {
 // @desc Delete the selected font
 // @route DELETE /api/selected-font
 // @access Private/Admin
-const deleteSelectedFont = asyncHandler(async (req, res) => {
+const deleteSelectedFont = asyncMiddleware(async (req, res) => {
   const font = await SelectedFont.findOne({});
   if (font) {
     await font.deleteOne();
