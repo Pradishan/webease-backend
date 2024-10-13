@@ -18,6 +18,7 @@ import configUIRouter from "./routes/configUI.routes.js";
 import fonts from "./routes/fonts.routes.js";
 import packgesRouter from "./routes/packges.routes.js";
 import aboutRouter from "./routes/about.routes.js"
+import SelectedFont from "./routes/selectedFont.routes.js";
 import componentsRouter from "./routes/components.routes.js"
 import { app, server } from "./socket/socket.js";
 
@@ -52,6 +53,7 @@ app.use("/api/config-ui", configUIRouter);
 app.use("/api/fonts", fonts);
 app.use("/api/packges", packgesRouter)
 app.use("/api/about", aboutRouter)
+app.use("/api/selected-font", SelectedFont)
 app.use("/api/components", componentsRouter)
 
 
