@@ -226,8 +226,12 @@ const resetPasswordByOtp = asyncMiddleware(async (req, res) => {
 
 const getLoggedUser = asyncMiddleware(async (req, res) => {
   const loggedUserID = req.user._id;
-  const user = await User.findOne(loggedUserID).select("-password");
-  res.status(200).json(user);
+  if (loggedUserID) {
+    const user = await User.findOne(loggedUserID).select("-password");
+    res.status(200).json(user);
+  } else {
+    res.status(200).json({ message: "User not logged" });
+  }
 });
 
 const logout = asyncMiddleware(async (req, res) => {

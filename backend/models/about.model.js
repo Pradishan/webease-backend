@@ -37,6 +37,18 @@ const aboutSchema = mongoose.Schema(
           required: true,
         },
         value: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    fetures: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        text: {
           type: String,
           required: true,
         },

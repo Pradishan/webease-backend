@@ -10,11 +10,9 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
-Router.route("/").get(getAllAbout).post(adminAuthMiddleware, createAbout);
+Router.route("/").get(getAllAbout).post(authMiddleware,adminAuthMiddleware, createAbout);
 
 Router.route("/:id")
   .get(getAbout)
-  .put(adminAuthMiddleware, updateAbout)
+  .put(authMiddleware,adminAuthMiddleware, updateAbout)
  export default Router;

@@ -26,16 +26,30 @@ const validateAboutData = (data) => {
   if (!data.stat || !Array.isArray(data.stat)) {
     errors.push({ message: "Stat must be an array" });
   } else {
-    data.stat.forEach((statItem, index) => {
-      if (!statItem.title) {
+    data.stat.forEach((Item, index) => {
+      if (!Item.title) {
         errors.push({ message: `Stat title is required at index ${index}` });
       }
-      if (!statItem.value) {
+      if (!Item.value) {
         errors.push({ message: `Stat value is required at index ${index}` });
+      }
+      if (typeof Item.value !== "number") {
+        errors.push({ message: `Stat value should be a number at index ${index}` });
       }
     });
   }
-
+  if (!data.fetures || !Array.isArray(data.fetures)) {
+    errors.push({ message: "Fetures must be an array" });
+  } else {
+    data.fetures.forEach((Item, index) => {
+      if (!Item.title) {
+        errors.push({ message: `Fetures title is required at index ${index}` });
+      }
+      if (!Item.text) {
+        errors.push({ message: `Fetures text is required at index ${index}` });
+      }
+    });
+  }
   return errors;
 };
 
@@ -45,7 +59,7 @@ const createAbout = asyncMiddleware(async (req, res) => {
     return res.status(400).json({ errors });
   }
 
-  const { name, logo, banner, about, stat } = req.body;
+  const { name, logo, banner, about, stat, fetures } = req.body;
 
   const newAbout = new About({
     name,
@@ -53,6 +67,7 @@ const createAbout = asyncMiddleware(async (req, res) => {
     banner,
     about,
     stat,
+    fetures,
   });
 
   if (newAbout) {
@@ -89,7 +104,7 @@ const updateAbout = asyncMiddleware(async (req, res) => {
   }
 
   let _id = req.params.id;
-  const { name, logo, banner, about, stat } = req.body;
+  const { name, logo, banner, about, stat, fetures } = req.body;
 
   const existingAbout = await About.findById(_id);
 
@@ -99,6 +114,7 @@ const updateAbout = asyncMiddleware(async (req, res) => {
     existingAbout.banner = banner || existingAbout.banner;
     existingAbout.about = about || existingAbout.about;
     existingAbout.stat = stat || existingAbout.stat;
+    existingAbout.fetures = fetures || existingAbout.fetures;
 
     const updatedAbout = await existingAbout.save();
     res.json(updatedAbout);
@@ -107,9 +123,4 @@ const updateAbout = asyncMiddleware(async (req, res) => {
   }
 });
 
-export {
-  createAbout,
-  getAbout,
-  getAllAbout,
-  updateAbout,
-};
+export { createAbout, getAbout, getAllAbout, updateAbout };

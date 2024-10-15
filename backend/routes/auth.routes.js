@@ -18,6 +18,6 @@ Router.route("/forgetPassword").post(forgotPassword);
 Router.route("/resetPasswordByOtp").post(resetPasswordByOtp);
 Router.route("/login").post(login);
 Router.route("/logout").post(logout);
-Router.route("/loggedUser").get(authMiddleware, getLoggedUser);
+Router.route("/loggedUser").get(authMiddleware,getLoggedUser);
 
 export default Router;
