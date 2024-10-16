@@ -6,15 +6,14 @@ const validateComponentsData = (data) => {
   const errors = [];
 
   const fields = [
-    "banner",
     "stat",
+    "fetures",
     "about",
     "chat",
     "map",
     "testimonial",
     "contactUs",
     "services",
-    "subServices",
     "portfolio",
     "packages",
   ];

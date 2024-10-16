@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const componentSchema = new mongoose.Schema(
   {
-    banner: {
+    stat: {
       type: Boolean,
       required: true,
     },
-    stat: {
+    fetures: {
       type: Boolean,
       required: true,
     },
@@ -31,10 +31,6 @@ const componentSchema = new mongoose.Schema(
       required: true,
     },
     services: {
-      type: Boolean,
-      required: true,
-    },
-    subServices: {
       type: Boolean,
       required: true,
     },

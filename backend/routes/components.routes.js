@@ -10,14 +10,12 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
 Router.route("/")
   .get(getAllComponents)
-  .post(adminAuthMiddleware, createComponents);
+  .post(authMiddleware, adminAuthMiddleware, createComponents);
 
 Router.route("/:id")
   .get(getComponents)
-  .put(adminAuthMiddleware, updateComponents);
+  .put(authMiddleware, adminAuthMiddleware, updateComponents);
 
 export default Router;
