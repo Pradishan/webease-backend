@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 
 const portfolioSchema = mongoose.Schema(
   {
-    name: {
+    serviceTitle: {
       type: String,
       required: true,
-      unique: true,
     },
     image:{
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+      unique: true,catogories
+    },
     description: {
-      type: String,
-      required: true,
-    },
-    catogory: {
-      type: String,
-      required: true,
-    },
+        type: String,
+        required: true,
+      },
   },
   {
     timestamps: true,
