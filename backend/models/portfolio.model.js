@@ -19,6 +19,10 @@ const portfolioSchema = new mongoose.Schema(
       type: String, // Assuming the cover image is stored as a URL or file path
       required: true,
     },
+    category: {
+      type: String, // Assuming the cover image is stored as a URL or file path
+      required: true,
+    },
   },
   {
     timestamps: true,

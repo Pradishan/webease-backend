@@ -3,18 +3,19 @@ import Portfolio from "../models/portfolio.model.js";
 
 // Create a portfolio
 const createPortfolio = asyncMiddleware(async (req, res) => {
-  const { name, image, description, category } = req.body;
-  const portfolio = await Portfolio.findOne({ name });
+  const { title, subtitle, description, coverImage, category } = req.body;
+  const portfolio = await Portfolio.findOne({ title });
 
   if (portfolio) {
     res.status(400);
-    throw new Error("Portfolio already exists");
+    throw new Error("Portfolio with this title already exists");
   }
 
   const newPortfolio = new Portfolio({
-    name,
-    image,
+    title,
+    subtitle,
     description,
+    coverImage,
     category,
   });
 
@@ -58,9 +59,10 @@ const updatePortfolio = asyncMiddleware(async (req, res) => {
   const portfolio = await Portfolio.findById(_id);
 
   if (portfolio) {
-    portfolio.name = req.body.name || portfolio.name;
-    portfolio.image = req.body.image || portfolio.image;
+    portfolio.title = req.body.title || portfolio.title;
+    portfolio.subtitle = req.body.subtitle || portfolio.subtitle;
     portfolio.description = req.body.description || portfolio.description;
+    portfolio.coverImage = req.body.coverImage || portfolio.coverImage;
     portfolio.category = req.body.category || portfolio.category;
 
     const updatedPortfolio = await portfolio.save();
