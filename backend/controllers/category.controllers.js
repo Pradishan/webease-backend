@@ -1,94 +1,203 @@
 import asyncMiddleware from "../middlewares/asyncMiddleware.js";
-import Portfolio from "../models/portfolio.model.js";
+import Category from "../models/category.model.js";
+import SubCategory from "../models/subcategory.model.js";
 
-// Create a portfolio
-const createPortfolio = asyncMiddleware(async (req, res) => {
-  const { name, image, description, category } = req.body;
-  const portfolio = await Portfolio.findOne({ name });
+const createCategory = asyncMiddleware(async (req, res) => {
+  const { name, image, description } = req.body;
+  const category = await Category.findOne({ name });
 
-  if (portfolio) {
+  if (category) {
     res.status(400);
-    throw new Error("Portfolio already exists");
+    throw new Error("Category is alrady exists");
   }
 
-  const newPortfolio = new Portfolio({
+  const newCategory = new Category({
     name,
     image,
     description,
-    category,
   });
 
-  if (newPortfolio) {
-    await newPortfolio.save();
-    res.status(201).json(newPortfolio);
+  if (newCategory) {
+    await newCategory.save();
+
+    res.status(201).json(newCategory);
   } else {
     res.status(400);
-    throw new Error("Portfolio not created");
+    throw new Error("Category not created");
   }
 });
 
-// Get a specific portfolio by ID
-const getPortfolioById = asyncMiddleware(async (req, res) => {
+const getCategory = asyncMiddleware(async (req, res) => {
   let _id = req.params.id;
-  const portfolio = await Portfolio.findById(_id);
-
-  if (!portfolio) {
+  const category = await Category.findById(_id);
+  if (!category) {
     res.status(404);
-    throw new Error("Portfolio not found");
+    throw new Error("Category not found");
   }
-
-  res.status(200).json(portfolio);
+  res.status(200).json(category);
 });
 
-// Get all portfolios
-const getAllPortfolios = asyncMiddleware(async (req, res) => {
-  const portfolios = await Portfolio.find({});
+const getAllCategory = asyncMiddleware(async (req, res) => {
+  const categoryies = await Category.find({});
 
-  if (portfolios.length === 0) {
+  if (categoryies.length === 0) {
     res.status(404);
-    throw new Error("No portfolios found");
+    throw new Error("No categoryies found");
   }
-
-  res.status(200).json(portfolios);
+  if (!categoryies) {
+    throw new Error("Error fetching categoryies");
+  }
+  res.status(200).json(categoryies);
 });
 
-// Update a portfolio by ID
-const updatePortfolio = asyncMiddleware(async (req, res) => {
+const updateCategory = asyncMiddleware(async (req, res) => {
   let _id = req.params.id;
-  const portfolio = await Portfolio.findById(_id);
 
-  if (portfolio) {
-    portfolio.name = req.body.name || portfolio.name;
-    portfolio.image = req.body.image || portfolio.image;
-    portfolio.description = req.body.description || portfolio.description;
-    portfolio.category = req.body.category || portfolio.category;
+  const category = await Category.findById(_id);
 
-    const updatedPortfolio = await portfolio.save();
-    res.json(updatedPortfolio);
+  if (category) {
+    category.name = req.body.name || category.name;
+    category.image = req.body.image || category.image;
+    category.description = req.body.description || category.description;
+
+    const updatedCategory = await category.save();
+
+    res.json(updatedCategory);
   } else {
     res.status(404);
-    throw new Error("Portfolio not found");
+    throw new Error("Category not found");
   }
 });
 
-// Delete a portfolio by ID
-const deletePortfolio = asyncMiddleware(async (req, res) => {
+const deleteCategory = asyncMiddleware(async (req, res) => {
   let _id = req.params.id;
-  const portfolio = await Portfolio.findById(_id);
 
-  if (portfolio) {
-    await portfolio.deleteOne();
-    res.json({ message: "Portfolio removed" });
+  const category = await Category.findById(_id);
+
+  if (category) {
+    await category.deleteOne();
+    res.json({ message: "Category removed" });
   } else {
     res.status(404);
-    throw new Error("Portfolio not found");
+    throw new Error("Category not found");
+  }
+});
+
+const createSubCategory = asyncMiddleware(async (req, res) => {
+  let categoryID = req.params.categoryID;
+  const { name, image, description } = req.body;
+
+  const category = await Category.findById(categoryID);
+
+  if (!category) {
+    res.status(404);
+    throw new Error("Category not found");
+  }
+
+  const subCategory = await SubCategory.findOne({ name, categoryID });
+
+  if (subCategory) {
+    res.status(400);
+    throw new Error("Sub Category is alrady exists");
+  }
+
+  const newSubCategory = new SubCategory({
+    categoryID,
+    name,
+    image,
+    description,
+  });
+
+  if (newSubCategory) {
+    await newSubCategory.save();
+
+    res.status(201).json(newSubCategory);
+  } else {
+    res.status(400);
+    throw new Error("Sub Category not created");
+  }
+});
+
+const getSubCategory = asyncMiddleware(async (req, res) => {
+  let _id = req.params.id;
+  const subCategory = await SubCategory.findById(_id);
+  if (!subCategory) {
+    res.status(404);
+    throw new Error("Sub Category not found");
+  }
+  res.status(200).json(subCategory);
+});
+
+const getAllSubCategory = asyncMiddleware(async (req, res) => {
+  const subCategoryies = await SubCategory.find({}).populate("categoryID");
+
+  if (subCategoryies.length === 0) {
+    res.status(404);
+    throw new Error("No sub categoryies found");
+  }
+  if (!subCategoryies) {
+    throw new Error("Error fetching sub categoryies");
+  }
+  res.status(200).json(subCategoryies);
+});
+
+const getAllSubCategoryByCategory = asyncMiddleware(async (req, res) => {
+  let categoryID = req.params.categoryID;
+  const subCategoryies = await SubCategory.find({ categoryID });
+
+  if (subCategoryies.length === 0) {
+    res.status(404);
+    throw new Error("No sub categoryies found");
+  }
+  if (!subCategoryies) {
+    throw new Error("Error fetching sub categoryies");
+  }
+  res.status(200).json(subCategoryies);
+});
+
+const updateSubCategory = asyncMiddleware(async (req, res) => {
+  let _id = req.params.id;
+
+  const subCategory = await SubCategory.findById(_id);
+
+  if (subCategory) {
+    subCategory.name = req.body.name || subCategory.name;
+    subCategory.image = req.body.image || subCategory.image;
+    subCategory.description = req.body.description || subCategory.description;
+
+    const updatedSubCategory = await subCategory.save();
+
+    res.json(updatedSubCategory);
+  } else {
+    res.status(404);
+    throw new Error("Sub Category not found");
+  }
+});
+
+const deleteSubCategory = asyncMiddleware(async (req, res) => {
+  let _id = req.params.id;
+
+  const subCategory = await SubCategory.findById(_id);
+
+  if (subCategory) {
+    await subCategory.deleteOne();
+    res.json({ message: "Sub Category removed" });
+  } else {
+    res.status(404);
+    throw new Error("Sub Category not found");
   }
 });
 
 export {
-  createPortfolio,
-  getPortfolioById,
-  getAllPortfolios,
-  updatePortfolio,
-  deletePortfolio,
+  createCategory,
+  getCategory,
+  getAllCategory,
+  updateCategory,
+  deleteCategory,
+  createSubCategory,
+  getSubCategory,
+  getAllSubCategory,
+  getAllSubCategoryByCategory,
+  updateSubCategory,
+  deleteSubCategory,
 };

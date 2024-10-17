@@ -1,83 +1,94 @@
-import Portfolio from "../models/Portfolio.js";
+import asyncMiddleware from "../middlewares/asyncMiddleware.js";
+import Portfolio from "../models/portfolio.model.js";
 
-// Create a new portfolio card
-export const createPortfolio = async (req, res) => {
-  const { title, subtitle, description, coverImage } = req.body;
+// Create a portfolio
+const createPortfolio = asyncMiddleware(async (req, res) => {
+  const { name, image, description, category } = req.body;
+  const portfolio = await Portfolio.findOne({ name });
 
-  try {
-    const newPortfolio = new Portfolio({
-      title,
-      subtitle,
-      description,
-      coverImage,
-    });
-
-    const savedPortfolio = await newPortfolio.save();
-    res.status(201).json(savedPortfolio);
-  } catch (error) {
-    res.status(500).json({ message: "Error creating portfolio", error });
+  if (portfolio) {
+    res.status(400);
+    throw new Error("Portfolio already exists");
   }
-};
 
-// Get all portfolio cards
-export const getAllPortfolios = async (req, res) => {
-  try {
-    const portfolios = await Portfolio.find();
-    res.status(200).json(portfolios);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching portfolios", error });
+  const newPortfolio = new Portfolio({
+    name,
+    image,
+    description,
+    category,
+  });
+
+  if (newPortfolio) {
+    await newPortfolio.save();
+    res.status(201).json(newPortfolio);
+  } else {
+    res.status(400);
+    throw new Error("Portfolio not created");
   }
-};
+});
 
-// Get a single portfolio card by ID
-export const getPortfolioById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const portfolio = await Portfolio.findById(id);
-    if (!portfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
-    res.status(200).json(portfolio);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching portfolio", error });
+// Get a specific portfolio by ID
+const getPortfolioById = asyncMiddleware(async (req, res) => {
+  let _id = req.params.id;
+  const portfolio = await Portfolio.findById(_id);
+
+  if (!portfolio) {
+    res.status(404);
+    throw new Error("Portfolio not found");
   }
-};
 
-// Update a portfolio card by ID
-export const updatePortfolio = async (req, res) => {
-  const { id } = req.params;
-  const { title, subtitle, description, coverImage } = req.body;
+  res.status(200).json(portfolio);
+});
 
-  try {
-    const updatedPortfolio = await Portfolio.findByIdAndUpdate(
-      id,
-      { title, subtitle, description, coverImage },
-      { new: true } // Return the updated document
-    );
+// Get all portfolios
+const getAllPortfolios = asyncMiddleware(async (req, res) => {
+  const portfolios = await Portfolio.find({});
 
-    if (!updatedPortfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
-
-    res.status(200).json(updatedPortfolio);
-  } catch (error) {
-    res.status(500).json({ message: "Error updating portfolio", error });
+  if (portfolios.length === 0) {
+    res.status(404);
+    throw new Error("No portfolios found");
   }
-};
 
-// Delete a portfolio card by ID
-export const deletePortfolio = async (req, res) => {
-  const { id } = req.params;
+  res.status(200).json(portfolios);
+});
 
-  try {
-    const deletedPortfolio = await Portfolio.findByIdAndDelete(id);
+// Update a portfolio by ID
+const updatePortfolio = asyncMiddleware(async (req, res) => {
+  let _id = req.params.id;
+  const portfolio = await Portfolio.findById(_id);
 
-    if (!deletedPortfolio) {
-      return res.status(404).json({ message: "Portfolio not found" });
-    }
+  if (portfolio) {
+    portfolio.name = req.body.name || portfolio.name;
+    portfolio.image = req.body.image || portfolio.image;
+    portfolio.description = req.body.description || portfolio.description;
+    portfolio.category = req.body.category || portfolio.category;
 
-    res.status(200).json({ message: "Portfolio deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Error deleting portfolio", error });
+    const updatedPortfolio = await portfolio.save();
+    res.json(updatedPortfolio);
+  } else {
+    res.status(404);
+    throw new Error("Portfolio not found");
   }
+});
+
+// Delete a portfolio by ID
+const deletePortfolio = asyncMiddleware(async (req, res) => {
+  let _id = req.params.id;
+  const portfolio = await Portfolio.findById(_id);
+
+  if (portfolio) {
+    await portfolio.deleteOne();
+    res.json({ message: "Portfolio removed" });
+  } else {
+    res.status(404);
+    throw new Error("Portfolio not found");
+  }
+});
+
+export {
+  createPortfolio,
+  getPortfolioById,
+  getAllPortfolios,
+  updatePortfolio,
+  deletePortfolio,
 };
