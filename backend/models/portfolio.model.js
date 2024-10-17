@@ -1,24 +1,24 @@
 import mongoose from "mongoose";
 
-const portfolioSchema = mongoose.Schema(
+const portfolioSchema = new mongoose.Schema(
   {
-    serviceTitle: {
-      type: String,
-      required: true,
-    },
-    image:{
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
-      unique: true,catogories
+      unique: true,
+    },
+    subtitle: {
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
+    },
+    coverImage: {
+      type: String, // Assuming the cover image is stored as a URL or file path
+      required: true,
+    },
   },
   {
     timestamps: true,
