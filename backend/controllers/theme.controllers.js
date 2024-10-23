@@ -27,7 +27,7 @@ const getTheme = asyncMiddleware(async (req, res) => {
   const theme = await Theme.findById(_id)
     .populate({
       path: 'colorID',
-      select: '-_id -createdAt -updatedAt -__v'
+      // select: '-_id -createdAt -updatedAt -__v'
     });
 
   if (!theme) {
