@@ -21,6 +21,7 @@ import portfolioRouter from "./routes/portfolio.routes.js";
 import aboutRouter from "./routes/about.routes.js"
 import SelectedFont from "./routes/selectedFont.routes.js";
 import componentsRouter from "./routes/components.routes.js"
+import SystemVariablesRouter from "./routes/systemVariable.routes.js"
 import { app, server } from "./socket/socket.js";
 
 dotenv.config();
@@ -57,6 +58,7 @@ app.use("/api/portfolio", portfolioRouter)
 app.use("/api/about", aboutRouter)
 app.use("/api/selected-font", SelectedFont)
 app.use("/api/components", componentsRouter)
+app.use("/api/systemVariable", SystemVariablesRouter)
 
 
 app.use(notFound);
