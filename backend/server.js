@@ -18,10 +18,11 @@ import configUIRouter from "./routes/configUI.routes.js";
 import fonts from "./routes/fonts.routes.js";
 import packgesRouter from "./routes/packges.routes.js";
 import portfolioRouter from "./routes/portfolio.routes.js";
-import aboutRouter from "./routes/about.routes.js"
+import aboutRouter from "./routes/about.routes.js";
 import SelectedFont from "./routes/selectedFont.routes.js";
-import componentsRouter from "./routes/components.routes.js"
-import SystemVariablesRouter from "./routes/systemVariable.routes.js"
+import componentsRouter from "./routes/components.routes.js";
+import SystemVariablesRouter from "./routes/systemVariable.routes.js";
+import DestinationRouter from "./routes/destination.routes.js";
 import { app, server } from "./socket/socket.js";
 
 dotenv.config();
@@ -30,7 +31,7 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_API_URL,process.env.ADMIN_FRONTEND_API_URL ], // specify the exact origin
+    origin: [process.env.FRONTEND_API_URL, process.env.ADMIN_FRONTEND_API_URL], // specify the exact origin
     credentials: true, // allow credentials
   })
 );
@@ -53,13 +54,13 @@ app.use("/api/colors", colorsRouter);
 app.use("/api/theme", themeRouter);
 app.use("/api/config-ui", configUIRouter);
 app.use("/api/fonts", fonts);
-app.use("/api/packges", packgesRouter)
-app.use("/api/portfolio", portfolioRouter)
-app.use("/api/about", aboutRouter)
-app.use("/api/selected-font", SelectedFont)
-app.use("/api/components", componentsRouter)
-app.use("/api/systemVariable", SystemVariablesRouter)
-
+app.use("/api/packges", packgesRouter);
+app.use("/api/portfolio", portfolioRouter);
+app.use("/api/about", aboutRouter);
+app.use("/api/selected-font", SelectedFont);
+app.use("/api/components", componentsRouter);
+app.use("/api/systemVariable", SystemVariablesRouter);
+app.use("/api/destination", DestinationRouter);
 
 app.use(notFound);
 app.use(errorMiddleware);
