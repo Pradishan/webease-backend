@@ -38,10 +38,14 @@ const componentSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    packages: {  // Corrected the typo here as well
+    packages: {  
       type: Boolean,
       required: true,
     },
+    destination:{
+      type: Boolean,
+      required: true,
+    }
   },
   {
     timestamps: true,

@@ -16,6 +16,7 @@ const validateComponentsData = (data) => {
     "services",
     "portfolio",
     "packages",
+    "destination",
   ];
 
   fields.forEach((field) => {
