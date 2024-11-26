@@ -11,13 +11,11 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
-Router.route("/").get(getAllColors).post(adminAuthMiddleware, createColor);
+Router.route("/").get(getAllColors).post(authMiddleware,adminAuthMiddleware, createColor);
 
 Router.route("/:id")
   .get(getColor)
-  .put(adminAuthMiddleware, updateColor)
-  .delete(adminAuthMiddleware, deleteColor);
+  .put(authMiddleware,adminAuthMiddleware, updateColor)
+  .delete(authMiddleware,adminAuthMiddleware, deleteColor);
 
 export default Router;
