@@ -12,8 +12,8 @@ const createPackges = asyncMiddleware(async (req, res) => {
 
   const newPackges = new Packges({
     service,
-    title,
     image,
+    title,
     price,
     description,
   });
