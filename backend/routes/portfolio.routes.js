@@ -13,7 +13,7 @@ const Router = express.Router();
 
 // Route for all portfolios or creating a new portfolio (admin required for creation)
 Router.route("/")
-  .get(authMiddleware, getAllPortfolios)
+  .get(getAllPortfolios)
   .post(authMiddleware, adminAuthMiddleware, createPortfolio);
 
 // Route for a specific portfolio by ID

@@ -11,13 +11,11 @@ import {
 
 const Router = express.Router();
 
-Router.use(authMiddleware);
-
-Router.route("/").get(getAllPackges).post(adminAuthMiddleware, createPackges);
+Router.route("/").get(getAllPackges).post(authMiddleware,adminAuthMiddleware, createPackges);
 
 Router.route("/:id")
   .get(getPackges)
-  .put(adminAuthMiddleware, updatePackges)
-  .delete(adminAuthMiddleware, deletePackges);
+  .put(authMiddleware,adminAuthMiddleware, updatePackges)
+  .delete(authMiddleware,adminAuthMiddleware, deletePackges);
 
 export default Router;
